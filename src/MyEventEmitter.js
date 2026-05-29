@@ -69,11 +69,7 @@ class MyEventEmitter {
     }
   }
   listenerCount(event) {
-    if (Array.isArray(this.#events[event])) {
-      return this.#events[event].reduce((acc) => (acc += 1), 0);
-    }
-
-    return 0;
+    return this.#events[event]?.length ?? 0;
   }
 }
 
