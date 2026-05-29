@@ -33,6 +33,10 @@ class MyEventEmitter {
     this.on(event, wrapper);
   }
   emit(key, ...args) {
+    if (!this.#events[key]) {
+      return;
+    }
+
     for (const listener of this.#events[key]) {
       listener(...args);
     }
@@ -58,7 +62,11 @@ class MyEventEmitter {
     this.prependListener(event, wrapper);
   }
   removeAllListeners(event) {
-    this.#events[event] = [];
+    if (event) {
+      this.#events[event] = [];
+    } else {
+      this.#events = {};
+    }
   }
   listenerCount(event) {
     if (Array.isArray(this.#events[event])) {
